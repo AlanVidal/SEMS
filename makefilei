@@ -1,0 +1,11 @@
+TARGET = essai essai2 tube tube2 threads
+
+all : $(TARGET)
+
+threads: thread.c
+
+%.o: %.c
+	$(CC) -c $*.c
+
+clean:
+	rm -f $(TARGET) 
