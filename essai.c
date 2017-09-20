@@ -1,11 +1,15 @@
 #include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 
 main(){
 	int pid;
 	pid =fork();
 	if(pid == 0){
-		for(;;)printf("Je suis le fils\n");
+		printf("pid du fils %d : celui du pere",pid, getppid());
 	}else{
-		for(;;)printf("Je suis le pere\n");
+		printf("pid du pere %d,  pid du fils ", pid, getpid());
+		wait();
 	}
 }
