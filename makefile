@@ -1,6 +1,6 @@
-TARGET = essai
+TARGET = essai essai2
 
-all : essai
+all : $(TARGET)
 
 %.o: %.c
 	$(CC) -c $*.c
