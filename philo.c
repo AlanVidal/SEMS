@@ -6,15 +6,16 @@
 pthread_mutex_t fourchette[4];
 
 void fourchetteLock( void *i){
-		int iTmp = *((int*)i);
+	int iTmp = *((int*)i);
 
-		pthread_mutex_lock(&fourchette[iTmp]);
-		printf("Lock %d\n", iTmp);
-                pthread_mutex_lock(&fourchette[iTmp-1%4]);
- 
-                pthread_mutex_unlock(&fourchette[iTmp]);
-                printf("Lock %d\n", iTmp);
-                pthread_mutex_unlock(&fourchette[iTmp-1%4]);
+	pthread_mutex_lock(&fourchette[iTmp]);
+	printf("Lock %d\n", iTmp);
+        pthread_mutex_lock(&fourchette[iTmp-1%4]);
+	sleep(1);	 
+        pthread_mutex_unlock(&fourchette[iTmp]);
+        printf("Lock %d\n", iTmp);
+        pthread_mutex_unlock(&fourchette[iTmp-1%4]);
+	sleep(2);
 
 }
 
