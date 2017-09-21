@@ -1,40 +1,48 @@
+
 #include <stdio.h>
 #include <pthread.h>
+#include <stdlib.h>
  
-int a = 0;
-/*
-StartXThread(int nbrThread){
-        for(int compt = 0; compt < nbrThread; compt++){
-		if(pthread_create(&num_thread, NULL,(void *(*)())io, NULL)==-1){
-                	perror("pb thread_create\n");
-        	}
+pthread_mutex_t fourchette[4];
 
-	}
+void fourchetteLock( void *i){
+		int iTmp = *((int*)i);
+
+		pthread_mutex_lock(&fourchette[iTmp]);
+		printf("Lock %d\n", iTmp);
+                pthread_mutex_lock(&fourchette[iTmp-1%4]);
+ 
+                pthread_mutex_unlock(&fourchette[iTmp]);
+                printf("Lock %d\n", iTmp);
+                pthread_mutex_unlock(&fourchette[iTmp-1%4]);
+
 }
-*/
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-main(){
-	int nbrPhilo = 3;
-	pthread_t *p;
+int main(){
+
+        int nbrPhilo = 4;
+	pthread_t num_thread[nbrPhilo];
+	int compteur[nbrPhilo];
+	for(int i = 0; i < nbrPhilo ; i++){ compteur[i]=i;  }
+
+
+
+	for(int i = 0; i < nbrPhilo ; i++){
+
+	       if(pthread_create(&num_thread[i], NULL,(void*(*)()) fourchetteLock, &compteur[i] )==-1){
+        	        perror("pb thread_create\n");
+        	}
+
 	
-	 p = (pthread_t *) malloc(nbrPhilo* sizeOf(pthread_t));	
-
-
-       	/*
-	for(;;){
-		pthread_mutex_lock;
-		a = a +10;
-       		printf("thread0 : %d \n ",a);
-	        pthread_mutex_unlock;
+	}
+        for(int i = 0; i < nbrPhilo ; i++){
+        	pthread_join(num_thread[i],NULL);
 
 	}
-	*/		
 
 
-	pthread_join(num_thread,NULL);
-	
 }
 
 
