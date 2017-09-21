@@ -34,14 +34,11 @@ readBuff(){
 int main(){
     
     pthread_t num_thread[2];
+    
+    pthread_create(&num_thread[0], NULL, (char *(*)()) writeBuff,"Test 1");
+    pthread_create(&num_thread[1], NULL, (void *(*)()) readBuff,NULL);
+        
    
-    writeBuff("Test 1");
-    for(int i =0; i <1; i++){
-        pthread_create(&num_thread[i], NULL, (void *(*)()) writeBuff,NULL);
-        
-        
-    }
-
     
    
     
